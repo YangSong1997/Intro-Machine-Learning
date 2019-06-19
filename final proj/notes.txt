@@ -1,0 +1,3 @@
+In the Problem3_using_strings.ipynb, I tested things out incorporating the string factors. I didn’t get to apply pipeline here, and I found out that decision tree worked the best. I think one possible explanation could be that strings are made into dummy variables, which represent categorical data. Decision trees classify cases by branching on cases. 
+
+I uploaded the other three ipynbs again and deleted my 5pm upload in the evening just to add my name in the notebooks.

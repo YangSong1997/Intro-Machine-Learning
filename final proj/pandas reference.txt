@@ -1,0 +1,252 @@
+In [1]: import pandas as pd
+   ...: 
+
+In [2]: d = {'one' : pd.Series([1., 2., 3.,4.], index=['a', 'b', 'c','d']),'two'
+   ...:  :pd.Series(['Paul', 'John', 'Micheal','George'], index=['a', 'b', 'c', 
+   ...: 'd'])}
+   ...: 
+
+In [3]: print(d)
+{'two': a       Paul
+b       John
+c    Micheal
+d     George
+dtype: object, 'one': a    1.0
+b    2.0
+c    3.0
+d    4.0
+dtype: float64}
+
+In [4]: df = pd.DataFrame(d)
+   ...: 
+
+In [5]: print(df)
+   one      two
+a  1.0     Paul
+b  2.0     John
+c  3.0  Micheal
+d  4.0   George
+
+In [6]: df_with_dummies= pd.get_dummies(df,columns=["two"],drop_first=False)
+   ...: 
+
+In [7]: df_with_dummies
+Out[7]: 
+   one  two_George  two_John  two_Micheal  two_Paul
+a  1.0           0         0            0         1
+b  2.0           0         1            0         0
+c  3.0           0         0            1         0
+d  4.0           1         0            0         0
+
+In [8]: d = {'one' : pd.Series([1., 2., 3.,4.], index=['a', 'b', 'c','d']),'two' :pd.Series(['Paul', 'John', 'Micheal','George'], index=['a', 'b', 'c', 'd
+   ...: ']), 'three':pd.Series(['haochen','helene','perahia','zimerman'], index=['a','b','c','d'])}
+
+In [9]: df = pd.DataFrame(d)
+   ...: 
+
+In [10]: print(df)
+   one     three      two
+a  1.0   haochen     Paul
+b  2.0    helene     John
+c  3.0   perahia  Micheal
+d  4.0  zimerman   George
+
+In [11]: d = {'one' : pd.Series([1., 2., 3.,4.], index=['a', 'b', 'c','d']),'two' :pd.Series(['Paul', 'John', 'Micheal','George'], index=['a', 'b', 'c', '
+    ...: d']), 'tzree':pd.Series(['haochen','helene','perahia','zimerman'], index=['a','b','c','d'])}
+
+In [12]: df = pd.DataFrame(d)
+    ...: 
+
+In [13]: print(df)
+   one      two     tzree
+a  1.0     Paul   haochen
+b  2.0     John    helene
+c  3.0  Micheal   perahia
+d  4.0   George  zimerman
+
+In [14]: df_with_dummies= pd.get_dummies(df,columns=["two","tzree"],drop_first=False)
+
+In [15]: df_with_dummies
+Out[15]: 
+   one  two_George  two_John  two_Micheal  two_Paul  tzree_haochen  \
+a  1.0           0         0            0         1              1   
+b  2.0           0         1            0         0              0   
+c  3.0           0         0            1         0              0   
+d  4.0           1         0            0         0              0   
+
+   tzree_helene  tzree_perahia  tzree_zimerman  
+a             0              0               0  
+b             1              0               0  
+c             0              1               0  
+d             0              0               1  
+
+In [16]: d = {'one' : pd.Series([1., 2., 3.,4.], index=['a', 'b', 'c','d']),'two' :pd.Series(['Paul', 'John', 'Micheal','George'], index=['a', 'b', 'c', 'd']), 'tzree':pd.Series(['haoc
+    ...: hen','helene','perahia','helene'], index=['a','b','c','d'])}
+
+In [17]: df = pd.DataFrame(d)
+    ...: 
+
+In [18]: print(df)
+   one      two    tzree
+a  1.0     Paul  haochen
+b  2.0     John   helene
+c  3.0  Micheal  perahia
+d  4.0   George   helene
+
+In [19]: df_with_dummies= pd.get_dummies(df,columns=["two","tzree"],drop_first=False)
+
+In [20]: df_with_dummies
+Out[20]: 
+   one  two_George  two_John  two_Micheal  two_Paul  tzree_haochen  \
+a  1.0           0         0            0         1              1   
+b  2.0           0         1            0         0              0   
+c  3.0           0         0            1         0              0   
+d  4.0           1         0            0         0              0   
+
+   tzree_helene  tzree_perahia  
+a             0              0  
+b             1              0  
+c             0              1  
+d             1              0  
+
+In [21]: for row_index,row in df.iterrows():
+    ...:     print row
+  File "<ipython-input-21-5eb57f7a4f4c>", line 2
+    print row
+            ^
+SyntaxError: Missing parentheses in call to 'print'
+
+
+In [22]: for row_index,row in df.iterrows():
+    ...:     print(row)
+    ...: 
+one            1
+two         Paul
+tzree    haochen
+Name: a, dtype: object
+one           2
+two        John
+tzree    helene
+Name: b, dtype: object
+one            3
+two      Micheal
+tzree    perahia
+Name: c, dtype: object
+one           4
+two      George
+tzree    helene
+Name: d, dtype: object
+
+In [23]: df
+Out[23]: 
+   one      two    tzree
+a  1.0     Paul  haochen
+b  2.0     John   helene
+c  3.0  Micheal  perahia
+d  4.0   George   helene
+
+In [24]: for row in df.itertuples():
+    ...:     print(row)
+    ...:     
+Pandas(Index='a', one=1.0, two='Paul', tzree='haochen')
+Pandas(Index='b', one=2.0, two='John', tzree='helene')
+Pandas(Index='c', one=3.0, two='Micheal', tzree='perahia')
+Pandas(Index='d', one=4.0, two='George', tzree='helene')
+
+In [25]: matrix = df.as_matrix(columns=None)
+
+In [26]: matrix
+Out[26]: 
+array([[1.0, 'Paul', 'haochen'],
+       [2.0, 'John', 'helene'],
+       [3.0, 'Micheal', 'perahia'],
+       [4.0, 'George', 'helene']], dtype=object)
+
+In [27]: matrix[0][0]
+Out[27]: 1.0
+
+In [28]: type(matrix[0][0])
+Out[28]: float
+
+In [29]: type(matrix[0][1])
+Out[29]: str
+
+In [30]: matrix[3]
+Out[30]: array([4.0, 'George', 'helene'], dtype=object)
+
+In [31]: type(matrix)
+Out[31]: numpy.ndarray
+
+In [32]: arr = matrix.tolist()
+
+In [33]: arr
+Out[33]: 
+[[1.0, 'Paul', 'haochen'],
+ [2.0, 'John', 'helene'],
+ [3.0, 'Micheal', 'perahia'],
+ [4.0, 'George', 'helene']]
+
+In [34]: 
+
+
+
+
+
+
+                   dem             gop           
+total_votes_2012  -1.047483e+03  -1.047483e+03
+votes_dem_2012    -0.000000e+00  -0.000000e+00
+votes_gop_2012     4.335537e+04   4.335537e+04
+Obama              6.981908e+02   6.981908e+02
+Romney             5.777880e+02   5.777880e+02
+PST045214         -6.604541e+03  -6.604541e+03
+PST040210          6.686523e+02   6.686523e+02
+PST120214          3.740619e+02   3.740619e+02
+POP010210          0.000000e+00   0.000000e+00
+AGE135214         -4.793685e+02  -4.793685e+02
+AGE295214         -6.139211e+02  -6.139211e+02
+AGE775214          4.406088e+01   4.406088e+01
+SEX255214          4.528485e+02   4.528485e+02
+RHI125214         -0.000000e+00  -0.000000e+00
+RHI225214          0.000000e+00   0.000000e+00
+RHI325214          1.586248e+02   1.586248e+02
+RHI425214          2.870364e+02   2.870364e+02
+RHI525214         -1.818727e+03  -1.818727e+03
+RHI625214          7.327874e+01   7.327874e+01
+RHI725214         -0.000000e+00  -0.000000e+00
+RHI825214          2.752782e+02   2.752782e+02
+POP715213          1.270361e+02   1.270361e+02
+POP645213          4.796748e+02   4.796748e+02
+POP815213          1.933739e+01   1.933739e+01
+EDU635213          1.047889e+02   1.047889e+02
+EDU685213         -1.658893e+03  -1.658893e+03
+VET605213          1.025233e+03   1.025233e+03
+LFE305213         -0.000000e+00  -0.000000e+00
+HSG010214          1.070918e+04   1.070918e+04
+HSG445213         -0.000000e+00  -0.000000e+00
+HSG096213          7.378389e+02   7.378389e+02
+HSG495213         -8.123986e+02  -8.123986e+02
+HSD410213         -0.000000e+00  -0.000000e+00
+HSD310213          2.400442e+02   2.400442e+02
+INC910213         -3.878975e+02  -3.878975e+02
+INC110213          1.298897e+03   1.298897e+03
+PVY020213          1.103104e+00   1.103104e+00
+BZA010213          1.093032e+04   1.093032e+04
+BZA110213         -1.509917e+04  -1.509917e+04
+BZA115213          4.913690e+01   4.913690e+01
+NES010213         -1.753904e+03  -1.753904e+03
+SBO001207         -0.000000e+00  -0.000000e+00
+SBO315207         -1.154450e+02  -1.154450e+02
+SBO115207         -5.163561e+01  -5.163561e+01
+SBO215207          7.390142e+02   7.390142e+02
+SBO515207          1.050052e+03   1.050052e+03
+SBO415207          2.271257e+02   2.271257e+02
+SBO015207          1.284280e+02   1.284280e+02
+MAN450207          5.086821e+02   5.086821e+02
+WTN220207         -1.035538e+02  -1.035538e+02
+RTN130207         -3.764145e+03  -3.764145e+03
+RTN131207          2.345323e+02   2.345323e+02
+AFN120207          1.489823e+03   1.489823e+03
+BPS030214          3.518600e+02   3.518600e+02
+LND110210         -5.739352e+01  -5.739352e+01
+POP060210          9.996155e+01   9.996155e+01
